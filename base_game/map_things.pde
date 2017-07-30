@@ -1,4 +1,8 @@
-enum TileType { SUBDIVISION, EMPTY, IMPASS }; 
+//enum TileType { SUBDIVISION, EMPTY, IMPASS }; 
+// processing doesn't like enums for some reason,
+// so we'll just use the strings "subdivision", "empty", and "impass".
+// clunky but functional
+
 
 class Tile {
   Tile northNeighbor;
@@ -6,15 +10,21 @@ class Tile {
   Tile eastNeighbor;
   Tile westNeighbor;
   PImage image;
-  TileType type;
+  String type;
   Tile() {
+    this.image = loadImage("houseTile.png"); // placeholder code
+    this.type = "subdivision";
     // will deal with tiles having images and things happen in them later.
   }
 }
  
 class TileMap {
   Tile[][] tiles;
+  int tileHeight;
+  int tileWidth;
   TileMap(int w, int h) {
+    this.tileHeight = 64;
+    this.tileWidth = 64;
     this.tiles = new Tile[w][h];
     for (int iii=0; iii < w; iii++) {
       for (int jjj=0; jjj < h; jjj++) {
@@ -45,6 +55,13 @@ class TileMap {
         } else {
           this.tiles[iii][jjj].westNeighbor = this.tiles[iii][jjj+1]; 
         }
+      }
+    }
+  }
+  public void render() {
+    for (int iii = 0; iii < this.tiles.length; iii++) {
+      for (int jjj = 0; jjj < this.tiles[iii].length; jjj++) {
+        image(this.tiles[iii][jjj].image,this.tileWidth*iii,this.tileHeight*jjj);
       }
     }
   }

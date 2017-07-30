@@ -1,5 +1,5 @@
-//import processing.sound.*;
-//SoundFile file;
+import processing.sound.*;
+SoundFile file;
 PImage ana1;
 PImage ana2;
 PImage ana3;
@@ -12,7 +12,11 @@ PImage ana9;
 PImage ana10;
 PImage ana11;
 PImage ana12;
-
+PImage ana13;
+PImage ana14;
+PImage ana15;
+PImage ana16;
+PImage ana17;
 
 int startTime;
 
@@ -29,50 +33,71 @@ void setup(){
   ana10 = loadImage("ana10.png");
   ana11 = loadImage("ana11.png");
   ana12 = loadImage("ana12.png");
+  ana13 = loadImage("ana13.png");
+  ana14 = loadImage("ana14.png");
+  ana15 = loadImage("ana15.png");
+  ana16 = loadImage("ana16.png");
+  ana17 = loadImage("ana17.png");
   size(1200,450);
   background(0,0,0);
-  //file = new SoundFile(this, "mainTheme.wav");
-  //file.play();
+  file = new SoundFile(this, "mainTheme.wav");
+  file.play();
   startTime = millis();
 }
 
 
 void draw(){
-  int delta = millis() - startTime;
-  if ( delta < 4000){
+  int delta = (millis() - startTime)/1000;
+  if ( delta < 4){
     image(ana1,width/2-250,10);
   }
-  else if (delta >4000 && delta<8000){
+  else if (delta >4 && delta<8){
     image(ana2,width/2-250,10);
   }
-  else if (delta >8000 && delta<12000){
+  else if (delta >8 && delta<12){
     image(ana3,width/2-250,10);
   }
-  else if (delta >12000 && delta<16000){
+  else if (delta >12 && delta<16){
     image(ana4,width/2-250,10);
   }
-  else if (delta >16000 && delta<20000){
+  else if (delta >16 && delta<20){
     image(ana5,width/2-250,10);
   }
-  else if (delta >20000 && delta<24000){
+  else if (delta >20 && delta<24){
     image(ana6,width/2-250,10);
   }
-  else if (delta >24000 && delta<28000){
+  else if (delta >24 && delta<28){
     image(ana7,width/2-250,10);
   }
-  else if (delta >28000 && delta<32000){
+  else if (delta >28 && delta<32){
     image(ana8,width/2-250,10);
   }
-  else if (delta >32000 && delta<36000){
+  else if (delta >32 && delta<36){
     image(ana9,width/2-250,10);
   }
-  else if (delta >36000 && delta<40000){
+  else if (delta >36 && delta<40){
     image(ana10,width/2-250,10);
   }
-  else if (delta >40000 && delta<44000){
+  else if (delta >40 && delta<44){
     image(ana11,width/2-250,10);
   }
-  else if (delta >44000 && delta<48000){
+  else if (delta >44 && delta<48){
     image(ana12,width/2-250,10);
+  }
+  else if (delta>48 && delta<52){
+    image(ana13,width/2-250,10);
+  }
+  else if (delta > 52 && delta < 56){
+    image(ana14,0,0);
+  }
+  else if (delta>56 && delta<60){
+    background(0,0,0);
+    image(ana15,width/2-250,10);
+  }
+  else if (delta>60 && delta<64){
+    image(ana16,width/2-250,10);
+  }
+  else if (delta>64 && delta<68){
+    image(ana17,width/2-250,10);
   }
 }

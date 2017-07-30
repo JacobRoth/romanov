@@ -1,6 +1,5 @@
 void setup() {
   size(3750, 450);
-  
 }
 
 
@@ -22,13 +21,10 @@ void draw() {
     fill(70,200,250);
     rect(0,0,width,height);
     fill(60,180,0);
-    rect(0,300,width,height);
-  
-    
+    rect(0,300,width,height);    
     //for animation purposes, keep track of where we started
     int initialx = x;
-    //draw 15 houses
-    
+    //draw 15 houses    
     for (int i = 0; i < 15; i = i+1){
       if (types[i] < 1){
         makeHouse1(x,y,reds[i],greens[i],blues[i],reds[i+1],greens[i+1],blues[i+1]);
@@ -151,14 +147,5 @@ private int doorPos(int n, float[] types){
       pos = pos + 200;
     }
   }
-  /*if (types[n] <1){
-    pos = pos + 110;
-  }
-  else if (types[n] > 2){
-    pos = pos + 125;
-  }
-  else{
-    pos = pos + 100;
-  }*/
   return pos;
 }

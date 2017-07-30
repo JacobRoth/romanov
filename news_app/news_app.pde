@@ -42,9 +42,9 @@ void generateFrontPage(String turncoat) {
   }
   
   //articles
-  article(15, 30, shuffledHeadlines[0], true);
-  article(15, 140, shuffledHeadlines[1], false);
-  article(15, 250, shuffledHeadlines[2], true);
+  article(15, 30, shuffledHeadlines[0], randBool());
+  article(15, 140, shuffledHeadlines[1], randBool());
+  article(15, 250, shuffledHeadlines[2], randBool());
 
   //needed to make lines at top appear
   stroke(153);
@@ -52,7 +52,10 @@ void generateFrontPage(String turncoat) {
 
 String getTabloidHeadline() {
   String[] headlines = {"Pyotr Lipnitskaya's Last Moments", "Poklonskaya Married Again", "Did Czar Nicholas Drink Blood?",
-                        "Queen Victoria Alive?", "Inside the Kaiser's Sex Dungeon", "Rasputin's Grand Duchess ORGIES"};
+                        "Queen Victoria Alive?", "Inside the Kaiser's Sex Dungeon", "Rasputin's Grand Duchess ORGIES",
+                        "Lenin Lifts Paint Color Restrictions", "Bolsheviks Oust Lawncare Co. For Co-op",
+                        "Will the Revolution Hurt Property Values?", "Bolsheviks Ban Property Values",
+                        "Marx's Socialized Lawn Care Theory", "But What About the Children?"};
   int index = int(random(headlines.length));
   return headlines[index];
 }
@@ -74,13 +77,17 @@ void article(int x, int y, String headline, Boolean pictureLeft) {
   if(pictureLeft) {
     text(headline, x+65, y, 105, 100);
     PImage marx;
-    marx = loadImage("pictures/marx.png");
+    marx = loadImage("marx.png");
     image(marx, x, y);
   }
   else {
     text(headline, x, y, 105, 100);
-    fill(200, 200, 200);
-    noStroke();
-    rect(x+110, y, 60, 100);
+    PImage nicky;
+    nicky = loadImage("nicholasII.jpg");
+    image(nicky, x+110, y);
   }
+}
+  
+Boolean randBool() {
+  return (random(1) > .5);
 }

@@ -1,8 +1,8 @@
 //enum TileType { SUBDIVISION, EMPTY, IMPASS }; 
 // processing doesn't like enums for some reason,
-// so we'll just use the strings "subdivision", "empty", and "impass".
+// so we'll just use the strings "subdivision", "lake", and "park".
 // clunky but functional
-
+final String[] tileTypes = {"lake","subdivision","park"};
 
 class Tile {
   Tile northNeighbor;
@@ -11,9 +11,9 @@ class Tile {
   Tile westNeighbor;
   PImage image;
   String type;
-  Tile() {
-    this.image = loadImage("houseTile.png"); // placeholder code
-    this.type = "subdivision";
+  Tile() { // currently coded to be random
+    this.type = tileTypes[(int)(random(0,tileTypes.length))];
+    this.image = loadImage(this.type+".png"); // placeholder code
     // will deal with tiles having images and things happen in them later.
   }
 }

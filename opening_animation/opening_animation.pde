@@ -1,5 +1,7 @@
-import processing.sound.*;
-SoundFile file;
+import ddf.minim.*;
+
+Minim minim;
+AudioPlayer player;
 PImage ana1;
 PImage ana2;
 PImage ana3;
@@ -40,8 +42,9 @@ void setup(){
   ana17 = loadImage("ana17.png");
   size(1200,450);
   background(0,0,0);
-  file = new SoundFile(this, "mainTheme.wav");
-  file.play();
+   minim = new Minim(this);
+   player = minim.loadFile("mainTheme.wav");
+   player.play();
   startTime = millis();
 }
 

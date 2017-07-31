@@ -64,7 +64,7 @@ class Game {
     boolean isBad = true;
     while (isBad) {
       this.t = new TileMap(11,6,rotatedPhoneScreenOriginX,rotatedPhoneScreenOriginY);
-      isBad = this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE;
+      isBad = ( this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) || ( this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0]) >= 20) ;
     }
     // now create the procedure states
     this.openingAnimation = new OpeningAnimationState();
@@ -73,6 +73,10 @@ class Game {
 
     // make the map state the current
     this.currentState = this.mapState;
+  }
+  Tile anastasiaTile() {
+    //return the tile Anastastia is currently standing on
+    return(this.t.tiles[anastasiaGridX][anastasiaGridY]);
   }
 }
 

@@ -209,7 +209,7 @@ class MapState implements ProcedureState {
         //println(clickedTile.type);
         //println(clickedTile.northNeighbor.equals(clickedTile));
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
-        if(g.t.tiles[g.anastasiaGridX][g.anastasiaGridY].isNeighbor(clickedTile)) {
+        if(g.t.tiles[g.anastasiaGridX][g.anastasiaGridY].isNeighbor(clickedTile) && isTypeTraversable(clickedTile.type)) {
 	  g.anastasiaGridX=wIndex;
 	  g.anastasiaGridY=hIndex;
           g.movingAnimation = new MovingAnimationState();

@@ -4,8 +4,19 @@ import java.util.Collections;
 // processing doesn't like enums for some reason,
 // so we'll just use the strings "subdivision", "lake", and "park".
 // clunky but functional
-final String[] tileTypes = {"lake","subdivision","park"};
+final String[] tileTypes = {"lake","park","subdivision"};
 final String[] traversableTileTypes = {"subdivision"};
+
+Boolean isTypeTraversable(String t) {
+  // bullshit function i had to write to check if
+  // thing is in array
+  for (int iii=0; iii < traversableTileTypes.length; iii++) {
+    if(traversableTileTypes[iii].equals(t)) {
+      return(true);
+    }
+  }
+  return(false);
+}   
 
 
 class Tile {
@@ -16,7 +27,14 @@ class Tile {
   PImage image;
   String type;
   Tile() { // currently coded to be random
-    this.type = tileTypes[(int)(random(0,tileTypes.length))];
+    float r = random(1);
+    if (r < 0.2) {
+      this.type = "lake";
+    } else if (r > 0.8) {
+      this.type = "park";
+    } else {
+      this.type = "subdivision";
+    }
     this.image = loadImage(this.type+".png"); // placeholder code
     // will deal with tiles having images and things happen in them later.
   }
@@ -73,16 +91,25 @@ class TileMap {
     // find the shortest path between two tiles
     // we are going to implement Djikstra's algorithm
     ArrayList<Tile> nodeQueue = new ArrayList();
+    ArrayList<Tile> alreadyVisitedQueue = new ArrayList();
     ArrayList<Integer> costQueue = new ArrayList();
-
+    
     // put the first node on the queue
     nodeQueue.add(startTile);
     costQueue.add(0);
 
     while (true) {
+      //println(nodeQueue);
+
+      assert nodeQueue.size() == costQueue.size(); // should always be manipulating these in lockstep
+      if (nodeQueue.isEmpty()) {
+        // this means we visited all nodes and could not find end tile
+        return(Integer.MAX_VALUE);
+      }
       Integer minCostCurrently = Collections.min(costQueue);
       int queueIndex = costQueue.indexOf(minCostCurrently);
       // now that we have the lowest cost in the list, pop those off the lists
+
       int lowestCost = costQueue.remove(queueIndex);
       Tile lowestCostTile = nodeQueue.remove(queueIndex);
       // now we have the thing. Is it the destination? if so, return the cost.
@@ -90,41 +117,29 @@ class TileMap {
         return(lowestCost);
       }
 
-      // now, we add all the traversable neighbors of this tile to the queue. 
-      if (lowestCostTile.northNeighbor != null) {
-        if (traverseableTileTypes.contains(lowestCostTile.northNeighbor.type)) {
-          //make sure that we don't already have it
-          if (!(nodeQueue.contains(lowestCostTile.northNeighbor))) {
-            nodeQueue.add(lowestCostTile.northNeighbor);
-            costQueue.add(lowestCost+1);
-          }
-        }
-      }
-      // do that again for south, west, and east
-      if (lowestCostTile.southNeighbor != null) {
-        if (traverseableTileTypes.contains(lowestCostTile.southNeighbor.type)) {
-          //make sure that we don't already have it
-          if (!(nodeQueue.contains(lowestCostTile.southNeighbor))) {
-            nodeQueue.add(lowestCostTile.southNeighbor);
-            costQueue.add(lowestCost+1);
-          }
-        }
-      }
-      if (lowestCostTile.eastNeighbor != null) {
-        if (traverseableTileTypes.contains(lowestCostTile.eastNeighbor.type)) {
-          //make sure that we don't already have it
-          if (!(nodeQueue.contains(lowestCostTile.eastNeighbor))) {
-            nodeQueue.add(lowestCostTile.eastNeighbor);
-            costQueue.add(lowestCost+1);
-          }
-        }
-      }
-      if (lowestCostTile.westNeighbor != null) {
-        if (traverseableTileTypes.contains(lowestCostTile.westNeighbor.type)) {
-          //make sure that we don't already have it
-          if (!(nodeQueue.contains(lowestCostTile.westNeighbor))) {
-            nodeQueue.add(lowestCostTile.westNeighbor);
-            costQueue.add(lowestCost+1);
+      // now also mark this thing visited
+      alreadyVisitedQueue.add(lowestCostTile);
+
+      // now, we add all the neighbors of this tile to the queue, each with a cost that is one more than the current cost 
+      Tile[] neighbors = {lowestCostTile.northNeighbor,lowestCostTile.southNeighbor,lowestCostTile.eastNeighbor,lowestCostTile.westNeighbor};
+
+      for (int iii =0; iii < neighbors.length; iii++) {
+        Tile neighbor = neighbors[iii];
+        if (neighbor != null) {
+          if (isTypeTraversable(neighbor.type)) {
+            //make sure that we haven't already visited it 
+            if (!(alreadyVisitedQueue.contains(neighbor))) {
+              if (nodeQueue.contains(neighbor)) {
+                // we have to handle the case where its already in queue
+                // then we check its cost and compare it to lowestCost+1.
+                int indexOfNeighbor = nodeQueue.indexOf(neighbor);
+                costQueue.set(indexOfNeighbor, min( lowestCost+1, costQueue.get(indexOfNeighbor)));
+
+              } else {
+                nodeQueue.add(neighbor);
+                costQueue.add(lowestCost+1);
+              }
+            }
           }
         }
       }

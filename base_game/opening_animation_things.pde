@@ -52,53 +52,53 @@ class OpeningAnimationState implements ProcedureState {
       background(0,0,0);
       image(ana1,width/2-250,10);
     }
-    else if (this.delta >4 && this.delta<8){
+    else if (this.delta >4 && this.delta<10){
       image(ana2,width/2-250,10);
     }
-    else if (this.delta >8 && this.delta<12){
+    else if (this.delta >10 && this.delta<14){
       image(ana3,width/2-250,10);
     }
-    else if (this.delta >12 && this.delta<16){
+    else if (this.delta >14 && this.delta<19){
       image(ana4,width/2-250,10);
     }
-    else if (this.delta >16 && this.delta<20){
+    else if (this.delta >19 && this.delta<25){
       image(ana5,width/2-250,10);
     }
-    else if (this.delta >20 && this.delta<24){
+    else if (this.delta >25 && this.delta<31){
       image(ana6,width/2-250,10);
     }
-    else if (this.delta >24 && this.delta<28){
+    else if (this.delta >31 && this.delta<37){
       image(ana7,width/2-250,10);
     }
-    else if (this.delta >28 && this.delta<32){
+    else if (this.delta >37 && this.delta<41){
       image(ana8,width/2-250,10);
     }
-    else if (this.delta >32 && this.delta<36){
+    else if (this.delta >41 && this.delta<45){
       image(ana9,width/2-250,10);
     }
-    else if (this.delta >36 && this.delta<40){
+    else if (this.delta >45 && this.delta<49){
       image(ana10,width/2-250,10);
     }
-    else if (this.delta >40 && this.delta<44){
+    else if (this.delta >49 && this.delta<54){
       image(ana11,width/2-250,10);
     }
-    else if (this.delta >44 && this.delta<48){
+    else if (this.delta >54 && this.delta<56){
       image(ana12,width/2-250,10);
     }
-    else if (this.delta>48 && this.delta<52){
+    else if (this.delta>56 && this.delta<60){
       image(ana13,width/2-250,10);
     }
-    else if (this.delta > 52 && this.delta < 56){
+    else if (this.delta > 60 && this.delta < 64){
       image(ana14,0,0);
     }
-    else if (this.delta>56 && this.delta<60){
+    else if (this.delta>64 && this.delta<70){
       background(0,0,0);
       image(ana15,width/2-250,10);
     }
-    else if (this.delta>60 && this.delta<64){
+    else if (this.delta>70 && this.delta<76){
       image(ana16,width/2-250,10);
     }
-    else if (this.delta>64 && this.delta<68){
+    else if (this.delta>76 && this.delta<81){
       image(ana17,width/2-250,10);
     }
     else if (this.delta>75){

@@ -9,6 +9,9 @@ class MovingAnimationState implements ProcedureState {
   int stopPoint;
   int numIters;
   int counter;
+  int endIters;
+  int stopx;
+  int housex;
 
   MovingAnimationState() {
     this.reds = randColors();
@@ -17,9 +20,9 @@ class MovingAnimationState implements ProcedureState {
     this.types = houseTypes();
     this.x = 20;
     this.y = 200;
-    this.numHouses = 8;
-    this.stopPoint = doorPos(numHouses, types);
-    this.numIters = stopPoint/3;
+    this.numHouses = 10;
+    this.numIters = 150;
+    this.endIters = 500;
     this.counter = 0;
   }
   void draw(Game g) {
@@ -27,33 +30,91 @@ class MovingAnimationState implements ProcedureState {
       fill(70,200,250);
       rect(0,0,width,height);
       fill(60,180,0);
-      rect(0,300,width,height);    
-      //for animation purposes, keep track of where we started
-      int initialx = this.x;
-      //draw 15 houses    
-      for (int i = 0; i < 15; i = i+1){
-        if (this.types[i] < 1){
-          this.makeHouse1(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
-          this.x = this.x+220;
-        }
-        
-        else if (this.types[i] >2){
-          makeHouse3(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
-          this.x = this.x +250;
-        }
-        else {this.makeHouse2(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
-          this.x = this.x +200;
-        }      
-      } 
-      //draw us :)
-      fill(222,118,41);
-      rect(160, 300, 15, 30);
-      fill(255,174,201);
-      rect(160,310,15,20);
-      //we're going forward!
-      this.x = initialx - 3;
-      this.counter = this.counter +1;
-      if (this.numIters < this.counter){
+      rect(0,300,width,height);
+      if (this.counter< this.numIters){
+        //for animation purposes, keep track of where we started
+        int initialx = this.x;
+        //draw some houses    
+        for (int i = 0; i < this.numHouses; i = i+1){
+          if (this.types[i] < 1){
+            this.makeHouse1(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x+220;
+          }
+          
+          else if (this.types[i] >2){
+            makeHouse3(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x +250;
+          }
+          else {this.makeHouse2(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x +200;
+          }      
+        } 
+        //draw us :)
+        fill(225,56,0);
+        rect(160, 300, 15, 30);
+        fill(215,0,91);
+        rect(160,310,15,20);
+        //we're going forward!
+        this.x = initialx - 3;
+        this.counter = this.counter +1;
+      }
+      else if (this.counter == this.numIters){
+                int initialx = this.x;
+        //draw some houses    
+        for (int i = 0; i < this.numHouses; i = i+1){
+          if (this.types[i] < 1){
+            this.makeHouse1(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x+220;
+          }
+          
+          else if (this.types[i] >2){
+            makeHouse3(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x +250;
+          }
+          else {this.makeHouse2(this.x,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.x = this.x +200;
+          }      
+        } 
+        //draw us :)
+        fill(225,56,0);
+        rect(160, 300, 15, 30);
+        fill(215,0,91);
+        rect(160,310,15,20);
+        //we're going forward!
+        this.x = initialx - 3;
+        this.stopx = this.x;
+        this.counter = this.counter+1;
+      }
+      else if (this.counter < this.endIters){
+        //ana moves forward, houses stay still
+        //for animation purposes, keep track of where we started
+        int initialx = this.x;
+        this.housex = this.stopx;
+        //draw some houses    
+        for (int i = 0; i < this.numHouses; i = i+1){
+          if (this.types[i] < 1){
+            this.makeHouse1(this.housex,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.housex = this.housex+220;
+          }
+          
+          else if (this.types[i] >2){
+            makeHouse3(this.housex,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.housex = this.housex +250;
+          }
+          else {this.makeHouse2(this.housex,this.y,this.reds[i],this.greens[i],this.blues[i],this.reds[i+1],this.greens[i+1],this.blues[i+1]);
+            this.housex = this.housex +200;
+          }      
+        } 
+        //draw us :)
+        fill(225,56,0);
+        rect(this.x-this.stopx+160, 300, 15, 30);
+        fill(215,0,91);
+        rect(this.x-this.stopx+160,310,15,20);
+        //we're going forward!
+        this.x = initialx + 3;
+        this.counter = this.counter +1;
+      }
+      else if (this.endIters <= this.counter){
         //noLoop(); // this will eventually push us to another state
 	g.currentState = g.mapState;
 	// need to do things wrt. arriving to a place. Also,
@@ -143,20 +204,6 @@ class MovingAnimationState implements ProcedureState {
     return types;
   }
   
-  private int doorPos(int n, float[] types){
-    int pos = 0;
-    for (int i =0; i<n-1; i=i+1){
-      if (types[i] <1){
-        pos = pos + 200;
-      }
-      else if (types[i] >2){
-        pos = pos + 250;
-      }
-      else {
-        pos = pos + 200;
-      }
-    }
-    return pos;
-  }
+
   void mouseClicked(Game g) { } // not clear if this ever needs to be filled in
 }

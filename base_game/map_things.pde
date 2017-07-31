@@ -26,12 +26,19 @@ class Tile {
   Tile westNeighbor;
   PImage image;
   String type;
-  Tile(String typ) {
+  Person allegedSafeHouseOwner;
+  Tile(String typ, Person p) {
     this.type = typ ;
     this.image = loadImage(this.type+".png"); // placeholder code
+    this.allegedSafeHouseOwner = p;
   }
-  
-
+  Tile[] getNeighbors() {
+    Tile[] returnMe = {this.northNeighbor,this.southNeighbor,this.westNeighbor,this.eastNeighbor};
+    return(returnMe);
+  }
+  boolean isNeighbor(Tile otherTile) {
+    return( this.northNeighbor.equals(otherTile) && this.southNeighbor.equals(otherTile) && this.eastNeighbor.equals(otherTile) && this.westNeighbor.equals(otherTile) );
+   }
 }
 
 String randomTileType() { 
@@ -44,6 +51,10 @@ String randomTileType() {
       return("subdivision");
     }
     // will deal with tiles having things happen in them later.
+}
+
+Person randomPerson() {
+  return new Person("Some random dude",false);
 }
 
 class TileMap {
@@ -60,12 +71,12 @@ class TileMap {
     this.tiles = new Tile[w][h];
     for (int iii=0; iii < w; iii++) {
       for (int jjj=0; jjj < h; jjj++) {
-        this.tiles[iii][jjj] = new Tile(randomTileType());
+        this.tiles[iii][jjj] = new Tile(randomTileType(),randomPerson());
       }
     }
     // we want to put the special start and end tiles in, overwriting what's there
-    this.tiles[0][0] = new Tile("start");
-    this.tiles[w-1][h-1] = new Tile("end");
+    this.tiles[0][0] = new Tile("start",null);
+    this.tiles[w-1][h-1] = new Tile("end",new Person("Grigori Rasputin",false));
 
     // having put all the tiles in the array, we loop over them
     // again to wire up neighbor connections
@@ -159,27 +170,42 @@ class TileMap {
       }
     }
   }
+  public Integer[] gridIndiciesFromScreenCoords(int inputX,int inputY) {
+    Integer wIndex = null;
+    Integer hIndex = null;
+    if ((inputX > this.originX) && (inputX < this.originX + this.tileWidth*this.tiles.length)) {
+      wIndex = floor((inputX-this.originX)/this.tileWidth);
+    }
+     if ((inputY > this.originY) && (inputY < this.originY + this.tileHeight*this.tiles[0].length)) {
+      hIndex = floor((inputY-this.originY)/this.tileHeight);
+    }
+    Integer[] returnMe = {wIndex,hIndex};
+    // java has no tuples so have to return a two element array
+    return(returnMe);
+  }
 }
 
-class TestMapState implements ProcedureState {
-  TestMapState() {} // trivial constructor, nothing to see here
+
+class MapState implements ProcedureState {
+  MapState() {} // trivial constructor, nothing to see here
   void draw(Game g) {
     background(255,255,255);
     image(g.phoneHorizontal,0,0);
-    g.t.render(); // right now, just render the tiles
+    g.t.render();
+    image(g.anastasiaAvatar,g.t.tileWidth*g.anastasiaGridX+g.t.originX,g.t.tileHeight*g.anastasiaGridY+g.t.originY);
   }
   void mouseClicked(Game g) {
-    int wIndex = floor((mouseX-g.t.originX)/g.t.tileWidth);
-    int hIndex = floor((mouseY-g.t.originY)/g.t.tileWidth);
-    if (wIndex < g.t.tiles.length) {
-      if (hIndex < g.t.tiles[wIndex].length) { 
-        Tile clickedTile = g.t.tiles[wIndex][hIndex];
+    Integer[] indicies = g.t.gridIndiciesFromScreenCoords(mouseX,mouseY);
+    Integer wIndex = indicies[0];
+    Integer hIndex = indicies[1];
+    if ((wIndex != null) && (hIndex != null)) {
+        Tile clickedTile = g.t.tiles[(int)wIndex][(int)hIndex];
         //println(clickedTile.type);
         //println(clickedTile.northNeighbor.equals(clickedTile));
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
+
 	g.movingAnimation = new MovingAnimationState();
 	g.currentState=g.movingAnimation;
-      }
     }
   }
 } 

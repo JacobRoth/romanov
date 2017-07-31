@@ -34,32 +34,41 @@ class Game {
   PImage phoneHorizontal;
   PImage phoneVertical;
 
+  int anastasiaGridX; //note that these coordinates are in grid coords
+  int anastasiaGridY; // not screen coords
+  PImage anastasiaAvatar;
+
   //ArrayList<ProcedureState> states;
   ProcedureState openingAnimation;
-  ProcedureState testMap;
+  ProcedureState mapState;
   ProcedureState movingAnimation;
   
   ProcedureState currentState;
  
   Game() {
-    // first set up the phone stats
+    // first set up the phone stats and put anastasia on the start square
     this.phonePower = 100;
     this.maxPhonePower = 100;
+    this.anastasiaGridX = 0;
+    this.anastasiaGridY = 0;
+    // load anastasia's image
+    this.anastasiaAvatar = loadImage("avatar.png");
     // now get those phone image
     phoneHorizontal = loadImage("phone_horizontal.png");
     phoneVertical = loadImage("phone_vertical.png");
     // then create the game map.
-    this.t = new TileMap(11,6,50,50);
-    while (this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) {
+    boolean isBad = true;
+    while (isBad) {
       this.t = new TileMap(11,6,rotatedPhoneScreenOriginX,rotatedPhoneScreenOriginY);
+      isBad = this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE;
     }
     // now create the procedure states
     this.openingAnimation = new OpeningAnimationState();
-    this.testMap = new TestMapState();
+    this.mapState = new MapState();
     this.movingAnimation = new MovingAnimationState();
 
     // make the map state the current
-    this.currentState = this.testMap;
+    this.currentState = this.mapState;
   }
 }
 

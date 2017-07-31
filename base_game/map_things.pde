@@ -50,7 +50,11 @@ class TileMap {
   Tile[][] tiles;
   int tileHeight;
   int tileWidth;
-  TileMap(int w, int h) {
+  int originX;
+  int originY; // the coordinates of the top left corner of the map
+  TileMap(int w, int h,int x, int y) {
+    this.originX = x;
+    this.originY = y;
     this.tileHeight = 64;
     this.tileWidth = 64;
     this.tiles = new Tile[w][h];
@@ -93,7 +97,7 @@ class TileMap {
   public void render() { // draw the map to the screen
     for (int iii = 0; iii < this.tiles.length; iii++) {
       for (int jjj = 0; jjj < this.tiles[iii].length; jjj++) {
-        image(this.tiles[iii][jjj].image,this.tileWidth*iii,this.tileHeight*jjj);
+        image(this.tiles[iii][jjj].image,this.tileWidth*iii+this.originX,this.tileHeight*jjj+this.originY);
       }
     }
   }
@@ -156,3 +160,23 @@ class TileMap {
     }
   }
 }
+
+class TestMapState implements ProcedureState {
+  TestMapState() {} // trivial constructor, nothing to see here
+  void draw(Game g) {
+    g.t.render(); // right now, just render the tiles
+  }
+  void mouseClicked(Game g) {
+    int wIndex = floor((mouseX-g.t.originX)/g.t.tileWidth);
+    int hIndex = floor((mouseY-g.t.originY)/g.t.tileWidth);
+    if (wIndex < g.t.tiles.length) {
+      if (hIndex < g.t.tiles[wIndex].length) { 
+        Tile clickedTile = g.t.tiles[wIndex][hIndex];
+        //println(clickedTile.type);
+        //println(clickedTile.northNeighbor.equals(clickedTile));
+        println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
+      }
+    }
+  }
+} 
+

@@ -4,6 +4,11 @@ Game game;
 Minim minim;
 AudioPlayer audioPlayer;  // maybe this should be a property of Game?
 
+final int phoneScreenOriginX = 27;
+final int phoneScreenOriginY = 34;
+final int phoneScreenW = 195;
+final int phoneScreenH = 363;
+
 void setup() {
   size(1200,450);
   minim = new Minim(this);
@@ -34,16 +39,20 @@ void mouseClicked() {
 
 class Game {
   TileMap t;
+  int phonePower;
+  int maxPhonePower; 
 
   ArrayList<ProcedureState> states;
   ProcedureState currentState;
   Game() {
-    // first, create the game map.
-    this.t = new TileMap(11,6);
+    // first set up the phone stats
+    this.phonePower = 100;
+    this.maxPhonePower = 100;
+    // then create the game map.
+    this.t = new TileMap(11,6,50,50);
     while (this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) {
-      this.t = new TileMap(11,6);
+      this.t = new TileMap(11,6,50,50);
     }
-    // now deal with the audio things
     // now create the states list
     this.states = new ArrayList();
     this.states.add(new OpeningAnimationState());
@@ -58,25 +67,5 @@ interface ProcedureState {
   void draw(Game g);
   void mouseClicked(Game g);
 }
-
-class TestMapState implements ProcedureState {
-  TestMapState() {} // trivial constructor, nothing to see here
-  void draw(Game g) {
-    g.t.render(); // right now, just render the tiles
-  }
-  void mouseClicked(Game g) {
-    int wIndex = floor(mouseX/g.t.tileWidth);
-    int hIndex = floor(mouseY/g.t.tileWidth);
-    if (wIndex < g.t.tiles.length) {
-      if (hIndex < g.t.tiles[wIndex].length) { 
-        Tile clickedTile = g.t.tiles[wIndex][hIndex];
-        //println(clickedTile.type);
-        //println(clickedTile.northNeighbor.equals(clickedTile));
-        println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
-      }
-    }
-  }
-} 
-
 
 

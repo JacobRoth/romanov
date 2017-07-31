@@ -102,7 +102,7 @@ class OpeningAnimationState implements ProcedureState {
       image(ana17,width/2-250,10);
     }
     else if (this.delta>75){
-      g.currentState = g.states.get(1); // set current state to test map thing
+      g.currentState = g.testMap; // set current state to test map thing
     }
   }
   void mouseClicked(Game g) {} // may make this skip to title later

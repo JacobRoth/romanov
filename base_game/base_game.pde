@@ -42,8 +42,13 @@ class Game {
   int phonePower;
   int maxPhonePower; 
 
-  ArrayList<ProcedureState> states;
+  //ArrayList<ProcedureState> states;
+  ProcedureState openingAnimation;
+  ProcedureState testMap;
+  ProcedureState movingAnimation;
+  
   ProcedureState currentState;
+ 
   Game() {
     // first set up the phone stats
     this.phonePower = 100;
@@ -53,13 +58,13 @@ class Game {
     while (this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) {
       this.t = new TileMap(11,6,50,50);
     }
-    // now create the states list
-    this.states = new ArrayList();
-    this.states.add(new OpeningAnimationState());
-    this.states.add(new TestMapState());
+    // now create the procedure states
+    this.openingAnimation = new OpeningAnimationState();
+    this.testMap = new TestMapState();
+    this.movingAnimation = new MovingAnimationState();
 
     // make the map state the current
-    this.currentState = this.states.get(0);
+    this.currentState = this.movingAnimation;
   }
 }
 
@@ -67,5 +72,3 @@ interface ProcedureState {
   void draw(Game g);
   void mouseClicked(Game g);
 }
-
-

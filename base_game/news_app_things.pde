@@ -1,7 +1,7 @@
-class newsAppState implements ProcedureState {
+class NewsAppState implements ProcedureState {
   private String turncoat;
   
-  newsAppState () {}
+  NewsAppState () {}
   
   void setTurncoat(String turncoat) {
     this.turncoat = turncoat;

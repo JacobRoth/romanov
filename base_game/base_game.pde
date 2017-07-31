@@ -49,8 +49,9 @@ class Game {
   ProcedureState mapState;
   ProcedureState movingAnimation;
   ProcedureState loseState;
-
-  ProcedureState phoneHomeScreen; // not implemented yet
+  ProcedureState phoneHomeScreen;
+  ProcedureState newsApp;
+  ProcedureState textApp;
   
   ProcedureState currentState;
  
@@ -78,9 +79,12 @@ class Game {
     this.mapState = new MapState();
     this.movingAnimation = new MovingAnimationState();
     this.loseState = new LoseState();
+    this.phoneHomeScreen = new PhoneHomeState(this);
+    this.textApp = new TextingAppState();
+    this.newsApp = new NewsAppState();
 
-    // make the map state the current
-    this.currentState = this.mapState;
+    // make the home screen state the current
+    this.currentState = this.phoneHomeScreen;
   }
   Tile anastasiaTile() {
     //return the tile Anastastia is currently standing on

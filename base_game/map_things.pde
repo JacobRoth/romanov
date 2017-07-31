@@ -1,12 +1,11 @@
 import java.util.Collections;
 
-
 //enum TileType { SUBDIVISION, EMPTY, IMPASS }; 
 // processing doesn't like enums for some reason,
 // so we'll just use the strings "subdivision", "lake", and "park".
 // clunky but functional
-final String[] tileTypes = {"lake","park","subdivision"};
-final String[] traversableTileTypes = {"subdivision"};
+final String[] tileTypes = {"lake","park","subdivision","start","end"};
+final String[] traversableTileTypes = {"subdivision","end","start"};
 
 Boolean isTypeTraversable(String t) {
   // bullshit function i had to write to check if
@@ -27,20 +26,26 @@ class Tile {
   Tile westNeighbor;
   PImage image;
   String type;
-  Tile() { // currently coded to be random
+  Tile(String typ) {
+    this.type = typ ;
+    this.image = loadImage(this.type+".png"); // placeholder code
+  }
+  
+
+}
+
+String randomTileType() { 
     float r = random(1);
     if (r < 0.2) {
-      this.type = "lake";
+      return("lake");
     } else if (r > 0.8) {
-      this.type = "park";
+      return("park");
     } else {
-      this.type = "subdivision";
+      return("subdivision");
     }
-    this.image = loadImage(this.type+".png"); // placeholder code
-    // will deal with tiles having images and things happen in them later.
-  }
+    // will deal with tiles having things happen in them later.
 }
- 
+
 class TileMap {
   Tile[][] tiles;
   int tileHeight;
@@ -51,9 +56,13 @@ class TileMap {
     this.tiles = new Tile[w][h];
     for (int iii=0; iii < w; iii++) {
       for (int jjj=0; jjj < h; jjj++) {
-        this.tiles[iii][jjj] = new Tile();
+        this.tiles[iii][jjj] = new Tile(randomTileType());
       }
-    } 
+    }
+    // we want to put the special start and end tiles in, overwriting what's there
+    this.tiles[0][0] = new Tile("start");
+    this.tiles[w-1][h-1] = new Tile("end");
+
     // having put all the tiles in the array, we loop over them
     // again to wire up neighbor connections
     for (int iii=0; iii < w; iii++) {

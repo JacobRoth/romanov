@@ -177,6 +177,8 @@ class TestMapState implements ProcedureState {
         //println(clickedTile.type);
         //println(clickedTile.northNeighbor.equals(clickedTile));
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
+	g.movingAnimation = new MovingAnimationState();
+	g.currentState=g.movingAnimation;
       }
     }
   }

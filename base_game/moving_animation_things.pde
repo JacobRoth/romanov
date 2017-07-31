@@ -54,7 +54,8 @@ class MovingAnimationState implements ProcedureState {
       this.x = initialx - 3;
       this.counter = this.counter +1;
       if (this.numIters < this.counter){
-        noLoop(); // this will eventually push us to another state
+        //noLoop(); // this will eventually push us to another state
+	g.currentState = g.testMap;
       }
   } 
   

@@ -9,8 +9,8 @@ final int phoneScreenOriginY = 34;
 final int phoneScreenW = 195;
 final int phoneScreenH = 363;
 
-final int rotatedPhoneScreenOriginX = 62;
-final int rotatedPhoneScreenOriginY = 52;	
+final int rotatedPhoneScreenOriginX = 105;
+final int rotatedPhoneScreenOriginY = 34;	
 
 void setup() {
   size(1200,450);

@@ -164,6 +164,8 @@ class TileMap {
 class TestMapState implements ProcedureState {
   TestMapState() {} // trivial constructor, nothing to see here
   void draw(Game g) {
+    background(255,255,255);
+    image(g.phoneHorizontal,0,0);
     g.t.render(); // right now, just render the tiles
   }
   void mouseClicked(Game g) {
@@ -175,6 +177,8 @@ class TestMapState implements ProcedureState {
         //println(clickedTile.type);
         //println(clickedTile.northNeighbor.equals(clickedTile));
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
+	g.movingAnimation = new MovingAnimationState();
+	g.currentState=g.movingAnimation;
       }
     }
   }

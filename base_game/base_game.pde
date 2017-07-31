@@ -9,6 +9,9 @@ final int phoneScreenOriginY = 34;
 final int phoneScreenW = 195;
 final int phoneScreenH = 363;
 
+final int rotatedPhoneScreenOriginX = 105;
+final int rotatedPhoneScreenOriginY = 34;	
+
 void setup() {
   size(1200,450);
   minim = new Minim(this);
@@ -23,43 +26,40 @@ void draw() {
 void mouseClicked() {
   game.currentState.mouseClicked(game);
 }
-/*
-void mouseClicked() {
-  int wIndex = floor(mouseX/game.t.tileWidth);
-  int hIndex = floor(mouseY/game.t.tileWidth);
-  if (wIndex < game.t.tiles.length) {
-    if (hIndex < game.t.tiles[wIndex].length) { 
-      Tile clickedTile = game.t.tiles[wIndex][hIndex];
-      //println(clickedTile.type);
-      //println(clickedTile.northNeighbor.equals(clickedTile));
-      println(game.t.shortestPath(game.t.tiles[0][0],clickedTile));
-    }
-  }
-} */
 
 class Game {
   TileMap t;
   int phonePower;
-  int maxPhonePower; 
+  int maxPhonePower;
+  PImage phoneHorizontal;
+  PImage phoneVertical;
 
-  ArrayList<ProcedureState> states;
+  //ArrayList<ProcedureState> states;
+  ProcedureState openingAnimation;
+  ProcedureState testMap;
+  ProcedureState movingAnimation;
+  
   ProcedureState currentState;
+ 
   Game() {
     // first set up the phone stats
     this.phonePower = 100;
     this.maxPhonePower = 100;
+    // now get those phone image
+    phoneHorizontal = loadImage("phone_horizontal.png");
+    phoneVertical = loadImage("phone_vertical.png");
     // then create the game map.
     this.t = new TileMap(11,6,50,50);
     while (this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) {
-      this.t = new TileMap(11,6,50,50);
+      this.t = new TileMap(11,6,rotatedPhoneScreenOriginX,rotatedPhoneScreenOriginY);
     }
-    // now create the states list
-    this.states = new ArrayList();
-    this.states.add(new OpeningAnimationState());
-    this.states.add(new TestMapState());
+    // now create the procedure states
+    this.openingAnimation = new OpeningAnimationState();
+    this.testMap = new TestMapState();
+    this.movingAnimation = new MovingAnimationState();
 
     // make the map state the current
-    this.currentState = this.states.get(0);
+    this.currentState = this.testMap;
   }
 }
 
@@ -67,5 +67,3 @@ interface ProcedureState {
   void draw(Game g);
   void mouseClicked(Game g);
 }
-
-

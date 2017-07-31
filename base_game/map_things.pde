@@ -164,6 +164,8 @@ class TileMap {
 class TestMapState implements ProcedureState {
   TestMapState() {} // trivial constructor, nothing to see here
   void draw(Game g) {
+    background(255,255,255);
+    image(g.phoneHorizontal,0,0);
     g.t.render(); // right now, just render the tiles
   }
   void mouseClicked(Game g) {

@@ -37,8 +37,14 @@ class Tile {
     return(returnMe);
   }
   boolean isNeighbor(Tile otherTile) {
-    return( this.northNeighbor.equals(otherTile) && this.southNeighbor.equals(otherTile) && this.eastNeighbor.equals(otherTile) && this.westNeighbor.equals(otherTile) );
-   }
+    Tile[] neighbors = this.getNeighbors();
+    for (int iii=0; iii < neighbors.length; iii++) {
+      if ( otherTile.equals(neighbors[iii])) {
+        return(true);
+      }
+    }
+    return(false);
+  }
 }
 
 String randomTileType() { 
@@ -203,9 +209,12 @@ class MapState implements ProcedureState {
         //println(clickedTile.type);
         //println(clickedTile.northNeighbor.equals(clickedTile));
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
-
-	g.movingAnimation = new MovingAnimationState();
-	g.currentState=g.movingAnimation;
+        if(g.t.tiles[g.anastasiaGridX][g.anastasiaGridY].isNeighbor(clickedTile)) {
+	  g.anastasiaGridX=wIndex;
+	  g.anastasiaGridY=hIndex;
+          g.movingAnimation = new MovingAnimationState();
+          g.currentState=g.movingAnimation;
+	}
     }
   }
 } 

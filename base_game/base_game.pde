@@ -29,6 +29,7 @@ void mouseClicked() {
 
 class Game {
   TileMap t;
+  int currentDay;
   int phonePower;
   int maxPhonePower;
   PImage phoneHorizontal;
@@ -42,6 +43,8 @@ class Game {
   ProcedureState openingAnimation;
   ProcedureState mapState;
   ProcedureState movingAnimation;
+
+  ProcedureState phoneHomeScreen; // not implemented yet
   
   ProcedureState currentState;
  
@@ -49,6 +52,7 @@ class Game {
     // first set up the phone stats and put anastasia on the start square
     this.phonePower = 100;
     this.maxPhonePower = 100;
+    this.currentDay = 0;
     this.anastasiaGridX = 0;
     this.anastasiaGridY = 0;
     // load anastasia's image

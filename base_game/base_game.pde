@@ -3,11 +3,9 @@ TileMap t;
 void setup() {
   size(1200,450);
   t = new TileMap(11,6);
-  //println(t.shortestPath(t.tiles[0][0],t.tiles[1][1]));
-  println(isTypeTraversable("park"));
-  println(isTypeTraversable("subdivision"));
-  println(isTypeTraversable("lake"));
-
+  while (t.shortestPath(t.tiles[10][5],t.tiles[0][0])==Integer.MAX_VALUE) {
+    t = new TileMap(11,6);
+  }
 }
 
 void draw() {
@@ -27,3 +25,5 @@ void mouseClicked() {
     }
   }
 }
+
+

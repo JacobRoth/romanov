@@ -1,5 +1,6 @@
 import java.util.Collections;
 
+
 //enum TileType { SUBDIVISION, EMPTY, IMPASS }; 
 // processing doesn't like enums for some reason,
 // so we'll just use the strings "subdivision", "lake", and "park".

@@ -1,8 +1,14 @@
+import ddf.minim.*;
+
 Game game;
+Minim minim;
+AudioPlayer audioPlayer;  // maybe this should be a property of Game?
 
 void setup() {
   size(1200,450);
-  game = new Game();
+  minim = new Minim(this);
+  game = new Game(); 
+  
 }
 
 void draw() {
@@ -28,6 +34,7 @@ void mouseClicked() {
 
 class Game {
   TileMap t;
+
   ArrayList<ProcedureState> states;
   ProcedureState currentState;
   Game() {
@@ -36,9 +43,12 @@ class Game {
     while (this.t.shortestPath(this.t.tiles[10][5],this.t.tiles[0][0])==Integer.MAX_VALUE) {
       this.t = new TileMap(11,6);
     }
+    // now deal with the audio things
     // now create the states list
     this.states = new ArrayList();
+    this.states.add(new OpeningAnimationState());
     this.states.add(new TestMapState());
+
     // make the map state the current
     this.currentState = this.states.get(0);
   }
@@ -46,13 +56,11 @@ class Game {
 
 interface ProcedureState {
   void draw(Game g);
-  void setup(Game g);
   void mouseClicked(Game g);
 }
 
 class TestMapState implements ProcedureState {
   TestMapState() {} // trivial constructor, nothing to see here
-  void setup(Game g) {} // map setup is actually done at the game level, nothing needed here
   void draw(Game g) {
     g.t.render(); // right now, just render the tiles
   }
@@ -67,6 +75,8 @@ class TestMapState implements ProcedureState {
         println(g.t.shortestPath(g.t.tiles[0][0],clickedTile));
       }
     }
-
   }
 } 
+
+
+

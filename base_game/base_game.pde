@@ -21,6 +21,9 @@ void setup() {
 
 void draw() {
   game.currentState.draw(game);
+  if(game.isOver) {
+    game = new Game();
+  }
 }
 
 void mouseClicked() {
@@ -28,6 +31,8 @@ void mouseClicked() {
 }
 
 class Game {
+  boolean isOver;
+
   TileMap t;
   int currentDay;
   int phonePower;
@@ -43,12 +48,14 @@ class Game {
   ProcedureState openingAnimation;
   ProcedureState mapState;
   ProcedureState movingAnimation;
+  ProcedureState loseState;
 
   ProcedureState phoneHomeScreen; // not implemented yet
   
   ProcedureState currentState;
  
   Game() {
+    this.isOver=false;
     // first set up the phone stats and put anastasia on the start square
     this.phonePower = 100;
     this.maxPhonePower = 100;
@@ -70,6 +77,7 @@ class Game {
     this.openingAnimation = new OpeningAnimationState();
     this.mapState = new MapState();
     this.movingAnimation = new MovingAnimationState();
+    this.loseState = new LoseState();
 
     // make the map state the current
     this.currentState = this.mapState;
@@ -77,6 +85,14 @@ class Game {
   Tile anastasiaTile() {
     //return the tile Anastastia is currently standing on
     return(this.t.tiles[anastasiaGridX][anastasiaGridY]);
+  }
+  void doDay() {
+    // change the variables like they need to be changed for a day
+    this.maxPhonePower -= 50;
+    this.currentDay++;
+    if (this.maxPhonePower <= 0) {
+      this.currentState = this.loseState;
+    }
   }
 }
 

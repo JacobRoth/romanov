@@ -56,6 +56,8 @@ class MovingAnimationState implements ProcedureState {
       if (this.numIters < this.counter){
         //noLoop(); // this will eventually push us to another state
 	g.currentState = g.mapState;
+	// need to do things wrt. arriving to a place. Also,
+	g.doDay();
       }
   } 
   

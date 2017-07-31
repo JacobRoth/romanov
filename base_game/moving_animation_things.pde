@@ -24,14 +24,20 @@ class MovingAnimationState implements ProcedureState {
     this.numIters = 150;
     this.endIters = 500;
     this.counter = 0;
+
   }
-  void draw(Game g) {
+  void draw(Game g) {    
+      if (this.counter ==0){
+        audioPlayer = minim.loadFile("sevenTheme.wav");
+        audioPlayer.play();
+        this.counter = 1;
+      }
       //draw sky and ground
       fill(70,200,250);
       rect(0,0,width,height);
       fill(60,180,0);
       rect(0,300,width,height);
-      if (this.counter< this.numIters){
+       if (this.counter< this.numIters){
         //for animation purposes, keep track of where we started
         int initialx = this.x;
         //draw some houses    
@@ -115,6 +121,7 @@ class MovingAnimationState implements ProcedureState {
         this.counter = this.counter +1;
       }
       else if (this.endIters <= this.counter){
+        audioPlayer.close();
         //noLoop(); // this will eventually push us to another state
 	g.currentState = g.mapState;
 	// need to do things wrt. arriving to a place. Also,

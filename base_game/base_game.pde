@@ -50,7 +50,7 @@ class Game {
   ProcedureState movingAnimation;
   ProcedureState loseState;
   ProcedureState phoneHomeScreen;
-  ProcedureState newsApp;
+  NewsAppState newsApp;
   ProcedureState textApp;
   
   ProcedureState currentState;

@@ -44,12 +44,12 @@ class PhoneHomeState implements ProcedureState {
     this.messaging = new App(loadImage("texting_app.png"), xCoords[0], yCoords[0], g.textApp);
     this.news = new App(loadImage("news_app.png"), xCoords[1], yCoords[0], g.newsApp);
     this.rubleMaps = new App(loadImage("maps_app.png"), xCoords[2], yCoords[0], g.mapState);
-    this.photos = new App(loadImage("photos_app.png"), xCoords[0], yCoords[1], g.phoneHomeScreen);
-    this.camera = new App(loadImage("camera_app.png"), xCoords[1], yCoords[1], g.phoneHomeScreen);
-    this.flashlight = new App(loadImage("flashlight_app.png"), xCoords[2], yCoords[1], g.phoneHomeScreen);
-    this.plantID = new App(loadImage("plantID_app.png"), xCoords[0], yCoords[2], g.phoneHomeScreen);
-    this.tinder = new App(loadImage("tinder_app.png"), xCoords[1], yCoords[2], g.phoneHomeScreen);
-    this.songID = new App(loadImage("songID_app.png"), xCoords[2], yCoords[2], g.phoneHomeScreen);
+    this.photos = new App(loadImage("photos_app.png"), xCoords[0], yCoords[1], this);
+    this.camera = new App(loadImage("camera_app.png"), xCoords[1], yCoords[1], this);
+    this.flashlight = new App(loadImage("flashlight_app.png"), xCoords[2], yCoords[1], this);
+    this.plantID = new App(loadImage("plantID_app.png"), xCoords[0], yCoords[2], this);
+    this.tinder = new App(loadImage("tinder_app.png"), xCoords[1], yCoords[2], this);
+    this.songID = new App(loadImage("songID_app.png"), xCoords[2], yCoords[2], this);
     this.appsList.add(messaging);
     this.appsList.add(news);
     this.appsList.add(rubleMaps);

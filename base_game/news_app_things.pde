@@ -62,10 +62,8 @@ class NewsAppState implements ProcedureState {
   
   void draw(Game g) {
     this.findTurncoat(g);
-    if(millis()<=100) {
       generateFrontPage();
-    }
-    //noLoop();
+      //noLoop();
   }
   
   void mouseClicked(Game g) {
@@ -97,7 +95,7 @@ class NewsAppState implements ProcedureState {
 
   String getTabloidHeadline() {
     String[] headlines = {"Pyotr Lipnitskaya's Last Moments", "Poklonskaya Married Again", "Did Czar Nicholas Drink Blood?",
-                        "Queen Victoria Returned from the Grave?", "Inside the Kaiser's Sex Dungeon", "Rasputin's Grand Duchess ORGIES",
+                        "Queen Victoria Returned to Life?", "Inside the Kaiser's Sex Dungeon", "Rasputin's Grand Duchess ORGIES",
                         "Lenin Lifts Paint Color Restrictions", "Bolsheviks Oust Lawncare Co. For Co-op",
                         "Will the Revolution Hurt Property Values?", "Bolsheviks Ban Property Values",
                         "Marx's Socialized Lawn Care Theory", "But What About the Children?"};

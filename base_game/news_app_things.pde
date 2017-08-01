@@ -1,34 +1,41 @@
 class NewsAppState implements ProcedureState {
   private String turncoat;
+  String articleOneHeadline;
+  String articleTwoHeadline;
+  String articleThreeHeadline;
+  Boolean articleOneLeft;
+  Boolean articleTwoLeft;
+  Boolean articleThreeLeft;
   
-  NewsAppState () {}
+  NewsAppState() {}
+  
+  void findTurncoat(Game g) {
+    //determine loyalist and traitor
+    Tile anaTile = g.anastasiaTile();
+    Tile[] neighbors = anaTile.getNeighbors();
+    ArrayList<Person> traitors = new ArrayList<Person>();
+    for(int i = 0; i<neighbors.length; i++) {
+      if(neighbors[i] != null) {
+        if(neighbors[i].allegedSafeHouseOwner.isTurned) {
+          traitors.add(neighbors[i].allegedSafeHouseOwner);
+        }
+      }
+    }
+    if(traitors.isEmpty()) {
+      this.turncoat = null;
+    }
+    else {
+      this.turncoat = traitors.get(0).name;
+    }
+  }
   
   void setTurncoat(String turncoat) {
     this.turncoat = turncoat;
   }
   
-  void draw(Game g) {
-    generateFrontPage(this.turncoat);
-    noLoop();
-  }
-  
-  void mouseClicked(Game g) {
-    g.currentState = g.phoneHomeScreen;
-  }
-
-  void generateFrontPage(String turncoat) {
-    //background
-    fill(255, 255, 255);
-    rect(0, 0, phoneScreenW, phoneScreenH);
-  
-    //title of news source
-    line(phoneScreenOriginX+2, phoneScreenOriginY+4, phoneScreenOriginX+192, phoneScreenOriginY+4);
-    textSize(16);
-    fill(0, 0, 0);
-    text("The Heights Happenings", phoneScreenOriginX+2, phoneScreenOriginY+20);
-    line(phoneScreenOriginX+2, phoneScreenOriginY+24, phoneScreenOriginX+192, phoneScreenOriginY+24);
-  
-    //generate and shuffle headlines
+  void setArticleQualities(Game g) {
+     //generate and shuffle headlines
+    this.findTurncoat(g);
     String[] headlines = new String[3];
     if(turncoat != null) {
       headlines[0] = getRealHeadline(turncoat);
@@ -45,11 +52,44 @@ class NewsAppState implements ProcedureState {
     for(int i = 0; i < 3; i++) {
       shuffledHeadlines[i] = headlines[indices.get(i)];
     }
+    articleOneHeadline = shuffledHeadlines[0];
+    articleTwoHeadline = shuffledHeadlines[1];
+    articleThreeHeadline = shuffledHeadlines[2];
+    articleOneLeft = randBool();
+    articleTwoLeft = randBool();
+    articleThreeLeft = randBool();
+  }
+  
+  void draw(Game g) {
+    this.findTurncoat(g);
+    if(millis()<=100) {
+      generateFrontPage();
+    }
+    //noLoop();
+  }
+  
+  void mouseClicked(Game g) {
+    g.currentState = g.phoneHomeScreen;
+  }
+
+  void generateFrontPage() {
+    //background
+    fill(255, 255, 255);
+    rect(phoneScreenOriginX, phoneScreenOriginY, phoneScreenW, phoneScreenH);
+  
+    //title of news source
+    line(phoneScreenOriginX+2, phoneScreenOriginY+4, phoneScreenOriginX+192, phoneScreenOriginY+4);
+    textSize(16);
+    fill(0, 0, 0);
+    text("The Heights Happenings", phoneScreenOriginX+2, phoneScreenOriginY+20);
+    line(phoneScreenOriginX+2, phoneScreenOriginY+24, phoneScreenOriginX+192, phoneScreenOriginY+24);
+  
+   
   
     //articles
-    article(phoneScreenOriginX+15, phoneScreenOriginY+30, shuffledHeadlines[0], randBool());
-    article(phoneScreenOriginX+15, phoneScreenOriginY+140, shuffledHeadlines[1], randBool());
-    article(phoneScreenOriginX+15, phoneScreenOriginY+250, shuffledHeadlines[2], randBool());
+    article(phoneScreenOriginX+15, phoneScreenOriginY+30, articleOneHeadline, articleOneLeft);
+    article(phoneScreenOriginX+15, phoneScreenOriginY+140, articleTwoHeadline, articleTwoLeft);
+    article(phoneScreenOriginX+15, phoneScreenOriginY+250, articleThreeHeadline, articleThreeLeft);
 
     //needed to make lines at top appear
     stroke(153);

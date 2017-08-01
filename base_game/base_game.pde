@@ -79,9 +79,9 @@ class Game {
     this.mapState = new MapState();
     this.movingAnimation = new MovingAnimationState();
     this.loseState = new LoseState();
-    this.phoneHomeScreen = new PhoneHomeState(this);
     this.textApp = new TextingAppState();
     this.newsApp = new NewsAppState();
+    this.phoneHomeScreen = new PhoneHomeState(this);
 
     // make the home screen state the current
     this.currentState = this.phoneHomeScreen;

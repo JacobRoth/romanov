@@ -12,6 +12,7 @@ class App {
   }
   
   void drawIcon() {
+    //println(this.clickState);
     image(icon, originX, originY);
   }
   
@@ -58,11 +59,16 @@ class PhoneHomeState implements ProcedureState {
     this.appsList.add(plantID);
     this.appsList.add(tinder);
     this.appsList.add(songID);
-    
+
     
   }
   
   void draw(Game g) {
+    //println(g.newsApp);
+    //println(g.mapState);
+    //println(g.newsApp);
+    //println(this.rubleMaps.getClickState());
+    //println(this.news.getClickState());
     image(g.phoneVertical, 0, 0);
     PImage background = loadImage("phone_home.png");
     image(background, phoneScreenOriginX, phoneScreenOriginY);
@@ -74,6 +80,9 @@ class PhoneHomeState implements ProcedureState {
   void mouseClicked(Game g) {
     for(int i = 0; i< appsList.size(); i++) {
       if(appsList.get(i).inBox(mouseX, mouseY)) {
+        if(appsList.get(i) == this.news) {
+          g.newsApp.setArticleQualities(g);
+        }
         g.currentState = appsList.get(i).getClickState();
       }
     }
